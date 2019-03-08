@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sh.otk.classchecker.section.dao.SectionsMapper">
+  <resultMap id="BaseResultMap" type="sh.otk.classchecker.section.model.Sections">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="SECTION_ID" jdbcType="INTEGER" property="sectionId" />
+    <result column="SEESSION" jdbcType="VARCHAR" property="seession" />
+    <result column="CLASS_NUM" jdbcType="INTEGER" property="classNum" />
+    <result column="UNIT" jdbcType="INTEGER" property="unit" />
+    <result column="GRADING" jdbcType="VARCHAR" property="grading" />
+    <result column="DESCRIPTION" jdbcType="VARCHAR" property="description" />
+    <result column="PREQ" jdbcType="VARCHAR" property="preq" />
+    <result column="REQUIRE_LEC" jdbcType="TINYINT" property="requireLec" />
+    <result column="REQUIRE_REC" jdbcType="TINYINT" property="requireRec" />
+    <result column="REQIRE_LAB" jdbcType="TINYINT" property="reqireLab" />
+    <result column="IS_REC" jdbcType="TINYINT" property="isRec" />
+    <result column="MEET_MON" jdbcType="TINYINT" property="meetMon" />
+    <result column="MEET_TUE" jdbcType="TINYINT" property="meetTue" />
+    <result column="MEET_WED" jdbcType="TINYINT" property="meetWed" />
+    <result column="MEET_THU" jdbcType="TINYINT" property="meetThu" />
+    <result column="MEET_FRI" jdbcType="TINYINT" property="meetFri" />
+    <result column="START_TIME" jdbcType="TIME" property="startTime" />
+    <result column="END_TIME" jdbcType="TIME" property="endTime" />
+    <result column="START_DATE" jdbcType="DATE" property="startDate" />
+    <result column="END_DATE" jdbcType="DATE" property="endDate" />
+    <result column="ROOM" jdbcType="VARCHAR" property="room" />
+    <result column="CAMPUS" jdbcType="VARCHAR" property="campus" />
+    <result column="LOCATION" jdbcType="VARCHAR" property="location" />
+    <result column="TEXTBOOK" jdbcType="VARCHAR" property="textbook" />
+    <result column="CURRENT_STATUS" jdbcType="INTEGER" property="currentStatus" />
+    <result column="CLASS_CAP" jdbcType="INTEGER" property="classCap" />
+    <result column="WAITLIST_CAP" jdbcType="INTEGER" property="waitlistCap" />
+    <result column="SUBJECT" jdbcType="VARCHAR" property="subject" />
+    <result column="SUBJECT_NUM" jdbcType="INTEGER" property="subjectNum" />
+    <result column="SECTION_NUM" jdbcType="INTEGER" property="sectionNum" />
+    <result column="COURSE_NUM" jdbcType="INTEGER" property="courseNum" />
+    <result column="TERM" jdbcType="INTEGER" property="term" />
+    <result column="TITTLE" jdbcType="VARCHAR" property="tittle" />
+    <result column="CLASS_ATTRIBUTE" jdbcType="VARCHAR" property="classAttribute" />
+    <result column="INSTRUCTOR" jdbcType="VARCHAR" property="instructor" />
+    <result column="CAREER" jdbcType="VARCHAR" property="career" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    SECTION_ID, SEESSION, CLASS_NUM, UNIT, GRADING, DESCRIPTION, PREQ, REQUIRE_LEC, REQUIRE_REC, 
+    REQIRE_LAB, IS_REC, MEET_MON, MEET_TUE, MEET_WED, MEET_THU, MEET_FRI, START_TIME, 
+    END_TIME, START_DATE, END_DATE, ROOM, CAMPUS, `LOCATION`, TEXTBOOK, CURRENT_STATUS, 
+    CLASS_CAP, WAITLIST_CAP, SUBJECT, SUBJECT_NUM, SECTION_NUM, COURSE_NUM, TERM, TITTLE, 
+    CLASS_ATTRIBUTE, INSTRUCTOR, CAREER
+  </sql>
+  <select id="selectByExample" parameterType="sh.otk.classchecker.section.model.SectionsExample" resultMap="BaseResultMap">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sections
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="sh.otk.classchecker.section.model.SectionsExample">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    delete from sections
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <select id="countByExample" parameterType="sh.otk.classchecker.section.model.SectionsExample" resultType="java.lang.Long">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    select count(*) from sections
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    update sections
+    <set>
+      <if test="record.sectionId != null">
+        SECTION_ID = #{record.sectionId,jdbcType=INTEGER},
+      </if>
+      <if test="record.seession != null">
+        SEESSION = #{record.seession,jdbcType=VARCHAR},
+      </if>
+      <if test="record.classNum != null">
+        CLASS_NUM = #{record.classNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.unit != null">
+        UNIT = #{record.unit,jdbcType=INTEGER},
+      </if>
+      <if test="record.grading != null">
+        GRADING = #{record.grading,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null">
+        DESCRIPTION = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.preq != null">
+        PREQ = #{record.preq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.requireLec != null">
+        REQUIRE_LEC = #{record.requireLec,jdbcType=TINYINT},
+      </if>
+      <if test="record.requireRec != null">
+        REQUIRE_REC = #{record.requireRec,jdbcType=TINYINT},
+      </if>
+      <if test="record.reqireLab != null">
+        REQIRE_LAB = #{record.reqireLab,jdbcType=TINYINT},
+      </if>
+      <if test="record.isRec != null">
+        IS_REC = #{record.isRec,jdbcType=TINYINT},
+      </if>
+      <if test="record.meetMon != null">
+        MEET_MON = #{record.meetMon,jdbcType=TINYINT},
+      </if>
+      <if test="record.meetTue != null">
+        MEET_TUE = #{record.meetTue,jdbcType=TINYINT},
+      </if>
+      <if test="record.meetWed != null">
+        MEET_WED = #{record.meetWed,jdbcType=TINYINT},
+      </if>
+      <if test="record.meetThu != null">
+        MEET_THU = #{record.meetThu,jdbcType=TINYINT},
+      </if>
+      <if test="record.meetFri != null">
+        MEET_FRI = #{record.meetFri,jdbcType=TINYINT},
+      </if>
+      <if test="record.startTime != null">
+        START_TIME = #{record.startTime,jdbcType=TIME},
+      </if>
+      <if test="record.endTime != null">
+        END_TIME = #{record.endTime,jdbcType=TIME},
+      </if>
+      <if test="record.startDate != null">
+        START_DATE = #{record.startDate,jdbcType=DATE},
+      </if>
+      <if test="record.endDate != null">
+        END_DATE = #{record.endDate,jdbcType=DATE},
+      </if>
+      <if test="record.room != null">
+        ROOM = #{record.room,jdbcType=VARCHAR},
+      </if>
+      <if test="record.campus != null">
+        CAMPUS = #{record.campus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.location != null">
+        `LOCATION` = #{record.location,jdbcType=VARCHAR},
+      </if>
+      <if test="record.textbook != null">
+        TEXTBOOK = #{record.textbook,jdbcType=VARCHAR},
+      </if>
+      <if test="record.currentStatus != null">
+        CURRENT_STATUS = #{record.currentStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.classCap != null">
+        CLASS_CAP = #{record.classCap,jdbcType=INTEGER},
+      </if>
+      <if test="record.waitlistCap != null">
+        WAITLIST_CAP = #{record.waitlistCap,jdbcType=INTEGER},
+      </if>
+      <if test="record.subject != null">
+        SUBJECT = #{record.subject,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subjectNum != null">
+        SUBJECT_NUM = #{record.subjectNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.sectionNum != null">
+        SECTION_NUM = #{record.sectionNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.courseNum != null">
+        COURSE_NUM = #{record.courseNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.term != null">
+        TERM = #{record.term,jdbcType=INTEGER},
+      </if>
+      <if test="record.tittle != null">
+        TITTLE = #{record.tittle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.classAttribute != null">
+        CLASS_ATTRIBUTE = #{record.classAttribute,jdbcType=VARCHAR},
+      </if>
+      <if test="record.instructor != null">
+        INSTRUCTOR = #{record.instructor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.career != null">
+        CAREER = #{record.career,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    update sections
+    set SECTION_ID = #{record.sectionId,jdbcType=INTEGER},
+      SEESSION = #{record.seession,jdbcType=VARCHAR},
+      CLASS_NUM = #{record.classNum,jdbcType=INTEGER},
+      UNIT = #{record.unit,jdbcType=INTEGER},
+      GRADING = #{record.grading,jdbcType=VARCHAR},
+      DESCRIPTION = #{record.description,jdbcType=VARCHAR},
+      PREQ = #{record.preq,jdbcType=VARCHAR},
+      REQUIRE_LEC = #{record.requireLec,jdbcType=TINYINT},
+      REQUIRE_REC = #{record.requireRec,jdbcType=TINYINT},
+      REQIRE_LAB = #{record.reqireLab,jdbcType=TINYINT},
+      IS_REC = #{record.isRec,jdbcType=TINYINT},
+      MEET_MON = #{record.meetMon,jdbcType=TINYINT},
+      MEET_TUE = #{record.meetTue,jdbcType=TINYINT},
+      MEET_WED = #{record.meetWed,jdbcType=TINYINT},
+      MEET_THU = #{record.meetThu,jdbcType=TINYINT},
+      MEET_FRI = #{record.meetFri,jdbcType=TINYINT},
+      START_TIME = #{record.startTime,jdbcType=TIME},
+      END_TIME = #{record.endTime,jdbcType=TIME},
+      START_DATE = #{record.startDate,jdbcType=DATE},
+      END_DATE = #{record.endDate,jdbcType=DATE},
+      ROOM = #{record.room,jdbcType=VARCHAR},
+      CAMPUS = #{record.campus,jdbcType=VARCHAR},
+      `LOCATION` = #{record.location,jdbcType=VARCHAR},
+      TEXTBOOK = #{record.textbook,jdbcType=VARCHAR},
+      CURRENT_STATUS = #{record.currentStatus,jdbcType=INTEGER},
+      CLASS_CAP = #{record.classCap,jdbcType=INTEGER},
+      WAITLIST_CAP = #{record.waitlistCap,jdbcType=INTEGER},
+      SUBJECT = #{record.subject,jdbcType=VARCHAR},
+      SUBJECT_NUM = #{record.subjectNum,jdbcType=INTEGER},
+      SECTION_NUM = #{record.sectionNum,jdbcType=INTEGER},
+      COURSE_NUM = #{record.courseNum,jdbcType=INTEGER},
+      TERM = #{record.term,jdbcType=INTEGER},
+      TITTLE = #{record.tittle,jdbcType=VARCHAR},
+      CLASS_ATTRIBUTE = #{record.classAttribute,jdbcType=VARCHAR},
+      INSTRUCTOR = #{record.instructor,jdbcType=VARCHAR},
+      CAREER = #{record.career,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>
