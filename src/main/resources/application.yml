@@ -3,8 +3,13 @@ spring:
     url:  "jdbc:mysql://localhost:3306/ipm?useSSL=false&serverTimezone=UTC"
     username: "root"
     driver-class-name: "com.mysql.cj.jdbc.Driver"
-    password: "-798019912w21c12"
+    password: "123456"
 server:
   port: 80
 mybatis-plus:
   mapper-locations: classpath:mapper/*.xml
+graphql:
+  servlet:
+    mapping: /querys
+    enabled: true
+    corsEnabled: true

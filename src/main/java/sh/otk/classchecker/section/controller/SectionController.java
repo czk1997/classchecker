@@ -7,8 +7,11 @@ import org.jsoup.nodes.Document;
 
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import sh.otk.classchecker.classes.model.Classes;
@@ -16,6 +19,7 @@ import sh.otk.classchecker.classes.model.ClassesExample;
 import sh.otk.classchecker.classes.service.ClassesService;
 
 import sh.otk.classchecker.section.model.Sections;
+import sh.otk.classchecker.section.model.SectionsExample;
 import sh.otk.classchecker.section.service.SectionService;
 
 import java.io.IOException;
@@ -31,6 +35,7 @@ import java.util.regex.Pattern;
 public class SectionController {
     private final SectionService sectionService;
     private final ClassesService classessService;
+    private Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
     public SectionController(ClassesService classessService, SectionService sectionService) {
@@ -70,6 +75,17 @@ public class SectionController {
                 "SOCWRK", "SPAN", "STAT", "SWAHIL", "SWBEH", "SWCED", "SWCOSA", "SWE", "SWGEN", "SWINT", "SWRES", "SWWEL",
                 "TELCOM", "THEA", "TURKSH", "UKRAIN", "URBNST", "VIET"};
         for (String subject : SUBJECTS) {
+            Thread t = new Thread(() -> {
+                logger.info("Updating Subject Sections for " + subject + "in term:" + term);
+                updateSubject(subject, term);
+                logger.info("Finished Subject Update For " + subject + "for term: " + term);
+            });
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                logger.error(e.getMessage());
+            }
+            t.start();
 
         }
         return jsonObject;
@@ -91,7 +107,6 @@ public class SectionController {
     private void updateSubject(String subject, int term) {
         try {
             Document document = Jsoup.connect("https://psmobile.pitt.edu/app/catalog/listclasses/" + term + "/" + subject.toUpperCase()).get();
-            System.out.println("https://psmobile.pitt.edu/app/catalog/listclasses/" + term + "/" + subject.toUpperCase());
             Element element = document.body().getElementsByClass("main").get(0).getElementsByTag("section").get(0).getElementsByTag("section").get(1);
             for (Element e : element.getElementsByTag("a")) {
                 Classes classes = new Classes();
@@ -101,15 +116,15 @@ public class SectionController {
                     classes.setSubject(subject.toUpperCase());
                     String tittleBar[] = e.getAllElements().get(1).text().split(" - ");
                     classes.setClassTittle(tittleBar[1]);
-                    classes.setClassNum(Integer.parseInt(tittleBar[0]));
+                    classes.setClassNum(Integer.parseInt(tittleBar[0].replace("C", "").replace("D", "").replace("L", "")));
                     classes.setTerm(term);
                     classessService.insert(classes);
                 } catch (Exception e2) {
-                    e2.printStackTrace();
+                    logger.error(e2.getMessage());
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
     }
 
@@ -257,7 +272,14 @@ public class SectionController {
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
-
         return sections;
+    }
+
+    @GetMapping("/sections/{subject}/{term:[\\d]+}")
+    public List<Sections> getSections(@PathVariable String subject, @PathVariable int term) {
+        SectionsExample sectionsExample = new SectionsExample();
+        sectionsExample.createCriteria().andSubjectEqualTo(subject).andTermEqualTo(term);
+        return sectionService.getByExample(sectionsExample);
+
     }
 }

@@ -1,0 +1,5 @@
+type Sections{
+    sectionId: Int
+    seession: String
+    tittle: String!
+}
